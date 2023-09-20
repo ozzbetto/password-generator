@@ -15,20 +15,28 @@ def generate_password(length):
         return "La longitud de la contraseña debe ser mayor que cero"
 
     character_pool = string.ascii_letters + string.digits + string.punctuation
-    password = "".join(random.sample(character_pool, length))
+    password = "".join(random.choices(character_pool, k=length))
     
     return password
+
+def get_password_length():
+    while True:
+        try:
+            length = int(input('\nIngrese la longitud de la contraseña: '))
+            if length <= 0:
+                raise ValueError("La longitud de la contraseña debe ser mayor que cero.")
+            return length
+        except ValueError as e:
+            print(e)
 
 def main():
     print("Password Generator Program.")
     print("===========================")
 
     try:
-        length = int(input('\nEnter the length of the password: '))
+        length = get_password_length()
         password = generate_password(length)
         print(password)
-    except ValueError:
-        print("Por favor, ingresa un número válido.")
     except Exception as e:
         print(f"Ocurrió un error: {e}")
 
